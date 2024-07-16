@@ -2,7 +2,7 @@ import { PropertiesList } from "@/components/properties/properties-list";
 import { connectToDb } from "@/config/database";
 import { PropertyModel } from "@/models/Property";
 
-export const PropertiesPage = async () => {
+const PropertiesPage = async () => {
   await connectToDb();
   const properties = await PropertyModel.find({});
 
