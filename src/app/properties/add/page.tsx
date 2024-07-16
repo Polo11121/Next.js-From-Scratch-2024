@@ -1,4 +1,4 @@
-export const AddPropertyPage = () => {
+const AddPropertyPage = () => {
   return <div></div>;
 };
 
