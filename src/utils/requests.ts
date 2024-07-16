@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_DOMAIN || null;
+const API_URL = process.env.NEXT_PUBLIC_API_URL || null;
 
 export const fetchProperties = async () => {
   try {
@@ -6,7 +6,7 @@ export const fetchProperties = async () => {
       return [];
     }
 
-    const response = await fetch(`${API_URL}/api/properties`);
+    const response = await fetch(`${API_URL}/properties`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch properties");
@@ -28,7 +28,7 @@ export const fetchProperty = async (id: string) => {
       return null;
     }
 
-    const response = await fetch(`${API_URL}/api/properties/${id}`);
+    const response = await fetch(`${API_URL}/properties/${id}`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch property");

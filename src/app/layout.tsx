@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Inter } from "next/font/google";
 import { Navbar } from "@/components/navbar/navbar";
 import { Footer } from "@/components/footer";
+import { AuthProvider } from "@/providers/auth-provider";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -20,11 +21,13 @@ const RootLayout = ({
 }>) => (
   <html lang="en">
     <body className={inter.className}>
-      <div className="flex flex-col h-screen">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-      </div>
+      <AuthProvider>
+        <div className="flex flex-col h-screen">
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </div>
+      </AuthProvider>
     </body>
   </html>
 );
