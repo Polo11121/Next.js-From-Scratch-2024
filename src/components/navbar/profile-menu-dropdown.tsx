@@ -1,11 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { SignOutButton } from "@/components/navbar/sign-out-button";
 import Link from "next/link";
 import Image from "next/image";
 import profileDefault from "@/assets/profile.png";
 
-export const ProfileMenuDropdown = () => {
+type ProfileMenuDropdownProps = {
+  profileImage?: string | null;
+};
+
+export const ProfileMenuDropdown = ({
+  profileImage,
+}: ProfileMenuDropdownProps) => {
   const [isProfileMenuDropdownOpen, setIsProfileMenuDropdownOpen] =
     useState(false);
 
@@ -27,7 +34,7 @@ export const ProfileMenuDropdown = () => {
           <span className="sr-only">Open user menu</span>
           <Image
             className="h-8 w-8 rounded-full"
-            src={profileDefault}
+            src={profileImage || profileDefault}
             alt="Profile picture"
           />
         </button>
@@ -59,14 +66,7 @@ export const ProfileMenuDropdown = () => {
           >
             Saved Properties
           </Link>
-          <button
-            className="block px-4 py-2 text-sm text-gray-700"
-            role="menuitem"
-            id="user-menu-item-2"
-            tabIndex={-1}
-          >
-            Sign Out
-          </button>
+          <SignOutButton />
         </div>
       )}
     </div>

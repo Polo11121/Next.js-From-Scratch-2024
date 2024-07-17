@@ -1,6 +1,7 @@
 import { Schema, model, models, Document, Model } from "mongoose";
 
 export interface Property extends Document {
+  _id: Schema.Types.ObjectId;
   owner: Schema.Types.ObjectId;
   name: string;
   type: string;

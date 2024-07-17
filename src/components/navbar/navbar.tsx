@@ -5,14 +5,18 @@ import { ProfileMenuDropdown } from "@/components/navbar/profile-menu-dropdown";
 import { MobileMenuDropdown } from "@/components/navbar/mobile-menu-dropdown";
 import { DesktopNavbar } from "@/components/navbar/desktop-navbar";
 import { NavbarBurgerButton } from "@/components/navbar/navbar-burger-button";
-import { AuthenticationButton } from "@/components/navbar/authentication-button";
+import { AuthenticationButtons } from "@/components/navbar/authentication-buttons";
 import { NotificationButton } from "@/components/navbar/notification-button";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { useSession } from "next-auth/react";
 
 export const Navbar = () => {
+  const { data: session } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const isLoggedIn = Boolean(session);
+  const profileImage = session?.user?.image;
 
   const handleToggleMobileMenuVisibility = () =>
     setIsMobileMenuOpen((prevState) => !prevState);
@@ -34,14 +38,14 @@ export const Navbar = () => {
           {!isLoggedIn && (
             <div className="hidden md:block md:ml-6">
               <div className="flex items-center">
-                <AuthenticationButton />
+                <AuthenticationButtons />
               </div>
             </div>
           )}
           {isLoggedIn && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
               <NotificationButton />
-              <ProfileMenuDropdown />
+              <ProfileMenuDropdown profileImage={profileImage} />
             </div>
           )}
         </div>

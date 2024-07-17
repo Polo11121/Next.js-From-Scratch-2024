@@ -1,6 +1,6 @@
 "use client";
 
-import { AuthenticationButton } from "@/components/navbar/authentication-button";
+import { AuthenticationButtons } from "@/components/navbar/authentication-buttons";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import classNames from "classnames";
@@ -43,7 +43,7 @@ export const MobileMenuDropdown = ({ isLoggedIn }: MobileMenuDropdownProps) => {
             Add Property
           </Link>
         )}
-        {!isLoggedIn && <AuthenticationButton />}
+        {!isLoggedIn && <AuthenticationButtons />}
       </div>
     </div>
   );
