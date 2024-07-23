@@ -33,6 +33,8 @@ export const ProfileMenuDropdown = ({
           <span className="absolute -inset-1.5"></span>
           <span className="sr-only">Open user menu</span>
           <Image
+            width={32}
+            height={32}
             className="h-8 w-8 rounded-full"
             src={profileImage || profileDefault}
             alt="Profile picture"
