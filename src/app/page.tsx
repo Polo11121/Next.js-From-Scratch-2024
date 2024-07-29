@@ -1,13 +1,11 @@
 import { Hero } from "@/components/hero";
 import { InfoBoxes } from "@/components/info-boxes/info-boxes";
 import { PropertiesList } from "@/components/properties/properties-list";
-import { connectToDb } from "@/config/database";
-import { PropertyModel } from "@/models/Property";
+import { getProperties } from "@/services/getProperties";
 import Link from "next/link";
 
 const HomePage = async () => {
-  await connectToDb();
-  const properties = await PropertyModel.find({});
+  const properties = await getProperties();
 
   const sortedProperties = properties.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()

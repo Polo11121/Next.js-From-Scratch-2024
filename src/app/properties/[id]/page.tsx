@@ -2,8 +2,7 @@ import { BackButton } from "@/components/back-button";
 import { PropertyDetails } from "@/components/properties/property-details";
 import { PropertyHeaderImage } from "@/components/properties/property-header-image";
 import { PropertyImages } from "@/components/properties/property-images";
-import { connectToDb } from "@/config/database";
-import { PropertyModel } from "@/models/Property";
+import { getPropertyById } from "@/services/getProperty";
 import { isValidObjectId } from "mongoose";
 import { notFound } from "next/navigation";
 
@@ -17,9 +16,7 @@ const PropertyPage = async ({ params }: PropertyPageProps) => {
     notFound();
   }
 
-  await connectToDb();
-
-  const property = await PropertyModel.findById(params.id);
+  const property = await getPropertyById(params.id);
 
   if (!property) {
     notFound();
