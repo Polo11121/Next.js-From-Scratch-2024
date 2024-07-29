@@ -1,6 +1,7 @@
 import { BackButton } from "@/components/back-button";
 import { PropertyDetails } from "@/components/properties/property-details";
 import { PropertyHeaderImage } from "@/components/properties/property-header-image";
+import { PropertyImages } from "@/components/properties/property-images";
 import { connectToDb } from "@/config/database";
 import { PropertyModel } from "@/models/Property";
 import { isValidObjectId } from "mongoose";
@@ -115,6 +116,7 @@ const PropertyPage = async ({ params }: PropertyPageProps) => {
           </div>
         </div>
       </section>
+      <PropertyImages images={property.images} />
     </>
   );
 };
