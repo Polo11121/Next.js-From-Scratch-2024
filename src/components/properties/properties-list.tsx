@@ -9,7 +9,7 @@ export const PropertiesList = ({ properties }: PropertiesListProps) =>
   properties.length ? (
     <>
       {properties.map((property) => (
-        <PropertyCard property={property} key={property.id} />
+        <PropertyCard property={property} key={property._id.toString()} />
       ))}
     </>
   ) : (

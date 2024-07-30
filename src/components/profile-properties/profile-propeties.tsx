@@ -10,7 +10,7 @@ export const ProfileProperties = ({ properties }: ProfilePropertiesProps) => (
     <h2 className="text-xl font-semibold mb-4">Your Listings</h2>
     {properties.length ? (
       properties.map((property) => (
-        <ProfileProperty property={property} key={property.id} />
+        <ProfileProperty property={property} key={property._id.toString()} />
       ))
     ) : (
       <p>You have no property listings</p>

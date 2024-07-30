@@ -1,5 +1,6 @@
 import { ChangeEvent, useState, useTransition } from "react";
 import { addProperty } from "@/actions/addProperty";
+import { toast } from "react-toastify";
 
 type FIELDS = {
   type: string;
@@ -122,9 +123,16 @@ export const UseAddPropertyForm = () => {
     }));
   };
 
-  const addPropertyAction = async (formData: FormData) => {
-    startTransition(() => {
-      addProperty(formData);
+  const addPropertyAction = (formData: FormData) => {
+    startTransition(async () => {
+      const result = await addProperty(formData);
+
+      if (result?.error) {
+        toast.error(result.error);
+        return;
+      }
+
+      toast.success("Property successfully added");
     });
   };
 

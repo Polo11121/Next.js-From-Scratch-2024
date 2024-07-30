@@ -56,6 +56,7 @@ export const ProfileMenuDropdown = ({
             role="menuitem"
             id="user-menu-item-0"
             tabIndex={-1}
+            onClick={handleToggleProfileMenuDropdownVisibility}
           >
             Your Profile
           </Link>
@@ -65,6 +66,7 @@ export const ProfileMenuDropdown = ({
             role="menuitem"
             id="user-menu-item-2"
             tabIndex={-1}
+            onClick={handleToggleProfileMenuDropdownVisibility}
           >
             Saved Properties
           </Link>
