@@ -1,11 +1,13 @@
 "use client";
 
-import { AmenitiesCheckboxes } from "@/components/add-property/amenities-checkboxes";
-import { UseAddPropertyForm } from "@/hooks/use-add-property-form";
+import { AmenitiesCheckboxes } from "@/components/manage-property/amenities-checkboxes";
+import { UseManagePropertyForm } from "@/hooks/use-manage-property-form";
 import { capitalizeFirstLetter } from "@/utils/functions";
 import { Textarea } from "@/components/text-area";
 import { Select } from "@/components/select";
 import { Input } from "@/components/input";
+import { Property } from "@/models/Property";
+import Image from "next/image";
 
 const LOCATION_FIELDS = ["street", "city", "state", "zipcode"] as const;
 
@@ -19,7 +21,11 @@ const PROPERTY_TYPES = [
   "Other",
 ];
 
-export const AddPropertyForm = () => {
+type ManagePropertyFormProps = {
+  property?: Property;
+};
+
+export const ManagePropertyForm = ({ property }: ManagePropertyFormProps) => {
   const {
     fields,
     handleInputChange,
@@ -27,12 +33,12 @@ export const AddPropertyForm = () => {
     handleTextareaChange,
     handleAmenitiesChange,
     handleImageChange,
-    addPropertyAction,
+    submitAction,
     isPending,
-  } = UseAddPropertyForm();
+  } = UseManagePropertyForm(property);
 
   return (
-    <form action={addPropertyAction}>
+    <form action={submitAction}>
       <h2 className="text-3xl text-center font-semibold mb-6">Add Property</h2>
       <div className="flex flex-col gap-y-4">
         <Select
@@ -175,7 +181,7 @@ export const AddPropertyForm = () => {
           labelText="Seller Name"
           type="text"
           id="seller_name"
-          name="seller_info.name."
+          name="seller_info.name"
           className="border rounded w-full py-2 px-3"
           placeholder="Name"
         />
@@ -212,14 +218,28 @@ export const AddPropertyForm = () => {
           className="border rounded w-full py-2 px-3"
           accept="image/*"
           multiple
-          required
+          required={property ? false : true}
         />
+        {Boolean(fields.images?.length) && (
+          <div className="flex gap-2">
+            {fields.images.map((image, index) => (
+              <Image
+                height={80}
+                width={80}
+                key={index}
+                src={image}
+                alt={`Property Image ${index + 1}`}
+                className="w-20 h-20 object-cover rounded"
+              />
+            ))}
+          </div>
+        )}
         <button
           disabled={isPending}
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline disabled:opacity-50"
           type="submit"
         >
-          Add Property
+          {property ? "Edited" : "Add"} Property
         </button>
       </div>
     </form>

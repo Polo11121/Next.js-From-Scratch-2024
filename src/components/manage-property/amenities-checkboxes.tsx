@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 
-const AMENITIES = [
+export const AMENITIES = [
   "Wifi",
   "Full Kitchen",
   "Washer & Dryer",

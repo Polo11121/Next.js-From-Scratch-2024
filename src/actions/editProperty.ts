@@ -2,13 +2,13 @@
 
 import { AMENITIES } from "@/components/manage-property/amenities-checkboxes";
 import { connectToDb } from "@/config/database";
-import { PropertyModel } from "@/models/Property";
+import { Property, PropertyModel } from "@/models/Property";
 import { getSessionUser } from "@/utils/getSessionUser";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import cloudinary from "@/config/cloudinary";
 
-export const addProperty = async (formData: FormData) => {
-  let propertyId;
+export const editProperty = async (property: Property, formData: FormData) => {
+  const propertyId = property._id.toString();
 
   try {
     await connectToDb();
@@ -21,9 +21,6 @@ export const addProperty = async (formData: FormData) => {
 
     const { id } = sessionUser;
 
-    const images = formData.getAll("images") as File[];
-
-    const filteredImages = images.filter((image) => image.name !== "");
     const amenities = AMENITIES.map((amenity) => formData.get(amenity)).filter(
       (amenity) => amenity !== null
     );
@@ -53,37 +50,19 @@ export const addProperty = async (formData: FormData) => {
         phone: formData.get("seller_info.phone"),
       },
       owner: id,
-      images: [] as string[],
+      images: property.images,
     };
 
-    const imageUploadPromises = [];
-
-    for (const image of filteredImages) {
-      const imageBuffer = await image.arrayBuffer();
-      const imageArray = Array.from(new Uint8Array(imageBuffer));
-      const imageData = Buffer.from(imageArray);
-
-      const imageBase64 = imageData.toString("base64");
-
-      const result = await cloudinary.uploader.upload(
-        `data:image/png;base64,${imageBase64}`,
-        {
-          folder: "propertypulse",
-        }
-      );
-
-      imageUploadPromises.push(result.secure_url);
-    }
-
-    const uploadedImages = await Promise.all(imageUploadPromises);
-
-    propertyData.images = uploadedImages;
-
-    const newProperty = await PropertyModel.create(propertyData);
-
-    propertyId = newProperty._id;
+    await PropertyModel.updateOne(
+      {
+        id: propertyId,
+      },
+      propertyData
+    );
   } catch (error) {
-    return { error: "Could not create property" };
+    return { error: "Could not edit property" };
   }
+
+  revalidatePath(`/properties/${propertyId}`);
   redirect(`/properties/${propertyId}`);
 };

@@ -1,6 +1,8 @@
 import { ChangeEvent, useState, useTransition } from "react";
 import { addProperty } from "@/actions/addProperty";
 import { toast } from "react-toastify";
+import { Property } from "@/models/Property";
+import { editProperty } from "@/actions/editProperty";
 
 type FIELDS = {
   type: string;
@@ -14,7 +16,7 @@ type FIELDS = {
   };
   beds: string;
   baths: string;
-  square_feet: "";
+  square_feet: string;
   amenities: string[];
   rates: {
     weekly: string;
@@ -29,32 +31,32 @@ type FIELDS = {
   images: string[];
 };
 
-export const UseAddPropertyForm = () => {
+export const UseManagePropertyForm = (property?: Property) => {
   const [fields, setFields] = useState<FIELDS>({
-    type: "",
-    name: "",
-    description: "",
+    type: property?.type || "",
+    name: property?.name || "",
+    description: property?.description || "",
     location: {
-      street: "",
-      city: "",
-      state: "",
-      zipcode: "",
+      street: property?.location.street || "",
+      city: property?.location.city || "",
+      state: property?.location.state || "",
+      zipcode: property?.location.zipcode || "",
     },
-    beds: "",
-    baths: "",
-    square_feet: "",
-    amenities: [],
+    beds: property?.beds.toString() || "",
+    baths: property?.baths.toString() || "",
+    square_feet: property?.square_feet.toString() || "",
+    amenities: property?.amenities || [],
     rates: {
-      weekly: "",
-      monthly: "",
-      nightly: "",
+      weekly: property?.rates.weekly.toString() || "",
+      monthly: property?.rates.monthly.toString() || "",
+      nightly: property?.rates.nightly.toString() || "",
     },
     seller_info: {
-      name: "",
-      email: "",
-      phone: "",
+      name: property?.seller_info.name || "",
+      email: property?.seller_info.email || "",
+      phone: property?.seller_info.phone || "",
     },
-    images: [],
+    images: property?.images || [],
   });
 
   const [isPending, startTransition] = useTransition();
@@ -123,16 +125,18 @@ export const UseAddPropertyForm = () => {
     }));
   };
 
-  const addPropertyAction = (formData: FormData) => {
+  const submitAction = (formData: FormData) => {
     startTransition(async () => {
-      const result = await addProperty(formData);
+      const result = await (property
+        ? editProperty(property, formData)
+        : addProperty(formData));
 
       if (result?.error) {
         toast.error(result.error);
         return;
       }
 
-      toast.success("Property successfully added");
+      toast.success(`Property successfully ${property ? "edited" : "added"}`);
     });
   };
 
@@ -143,7 +147,7 @@ export const UseAddPropertyForm = () => {
     handleTextareaChange,
     handleAmenitiesChange,
     handleImageChange,
-    addPropertyAction,
+    submitAction,
     isPending,
   };
 };

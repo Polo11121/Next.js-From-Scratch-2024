@@ -11,6 +11,7 @@ type PropertyPageProps = {
     id: string;
   };
 };
+
 const PropertyPage = async ({ params }: PropertyPageProps) => {
   if (!isValidObjectId(params.id)) {
     notFound();

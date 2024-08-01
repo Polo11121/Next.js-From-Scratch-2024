@@ -1,10 +1,10 @@
-import { AddPropertyForm } from "@/components/add-property/add-property-form";
+import { ManagePropertyForm } from "@/components/manage-property/manage-property-form";
 
 const AddPropertyPage = () => (
   <section className="bg-blue-50">
     <div className="container m-auto max-w-2xl py-24">
       <div className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
-        <AddPropertyForm />
+        <ManagePropertyForm />
       </div>
     </div>
   </section>
