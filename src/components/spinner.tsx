@@ -5,18 +5,11 @@ const CSS_OVERDRIVE = {
   margin: "100px auto",
 };
 
-type LoadingPageProps = {
-  loading: boolean;
-};
-
-const LoadingPage = ({ loading }: LoadingPageProps) => (
+export const Spinner = () => (
   <ClipLoader
     color="#3B82F6"
-    loading={loading}
     cssOverride={CSS_OVERDRIVE}
     size={150}
     aria-label="Loading Spinner"
   />
 );
-
-export default LoadingPage;
