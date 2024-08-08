@@ -1,15 +1,24 @@
 import { HTMLProps } from "react";
+import classNames from "classnames";
 
 type TextareaProps = {
   labelText?: string;
+  labelClassName?: string;
 } & HTMLProps<HTMLTextAreaElement>;
 
-export const Textarea = ({ labelText, ...textareaProps }: TextareaProps) => (
+export const Textarea = ({
+  labelText,
+  labelClassName,
+  ...textareaProps
+}: TextareaProps) => (
   <div>
     {labelText && (
       <label
         htmlFor={textareaProps.id}
-        className="block text-gray-700 font-bold mb-2"
+        className={classNames(
+          "block text-gray-700 font-bold mb-2",
+          labelClassName
+        )}
       >
         {labelText}
       </label>
