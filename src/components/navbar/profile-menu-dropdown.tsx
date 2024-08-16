@@ -61,7 +61,7 @@ export const ProfileMenuDropdown = ({
             Your Profile
           </Link>
           <Link
-            href="/"
+            href="/properties/saved"
             className="block px-4 py-2 text-sm text-gray-700"
             role="menuitem"
             id="user-menu-item-2"

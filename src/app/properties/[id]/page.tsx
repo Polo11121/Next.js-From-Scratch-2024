@@ -33,7 +33,9 @@ const PropertyPage = async ({ params }: PropertyPageProps) => {
   const propertyId = property._id.toString();
 
   const isBookmarked = Boolean(
-    userBookmarks.find((userBookmark) => userBookmark.toString() === propertyId)
+    userBookmarks.find(
+      (userBookmark) => userBookmark._id.toString() === propertyId
+    )
   );
 
   return (
@@ -51,7 +53,7 @@ const PropertyPage = async ({ params }: PropertyPageProps) => {
                     propertyId={propertyId}
                     isBookmarked={isBookmarked}
                   />
-                  <ShareProperty />
+                  <ShareProperty propertyId={propertyId} property={property} />
                 </>
               )}
               <PropertyContactForm />
