@@ -7,19 +7,10 @@ import { Textarea } from "@/components/text-area";
 import { Select } from "@/components/select";
 import { Input } from "@/components/input";
 import { Property } from "@/models/Property";
+import { PROPERTY_TYPES } from "@/utils/constants";
 import Image from "next/image";
 
 const LOCATION_FIELDS = ["street", "city", "state", "zipcode"] as const;
-
-const PROPERTY_TYPES = [
-  "Apartment",
-  "Condo",
-  "House",
-  "Cabin Or Cottage",
-  "Room",
-  "Studio",
-  "Other",
-];
 
 type ManagePropertyFormProps = {
   property?: Property;
